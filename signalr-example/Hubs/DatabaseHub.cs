@@ -2,15 +2,21 @@ using Microsoft.AspNetCore.SignalR;
 
 namespace SignalRExample.Hubs;
 
-public class DatabaseHub : Hub<DatabaseHubMethods>
+public class DatabaseHub : Hub<DatabaseHubEvents>
 {
-    public async Task DatabaseChange(string client)
+    public async Task NotifyAll(TableChangeModel changeModel)
     {
-        await Clients.All.DatabaseChanged(client);
+        //I can cause an event in here by calling Clients property.
+       //or something unrelated to SignalR.
+       await Clients.All.ProductTableChanged(changeModel);
     }
 }
 
-public interface DatabaseHubMethods
+public interface DatabaseHubEvents
 {
-    Task DatabaseChanged(string client);
+    //Event we are going to fire when Product table changes.
+    Task ProductTableChanged(TableChangeModel changeModel);
+
+    //Event we are going to fire when Person table changes.
+    Task PersonTableChanged(TableChangeModel changeModel);
 }
