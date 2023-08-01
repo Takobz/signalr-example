@@ -1,6 +1,7 @@
-public class Product
+namespace signalr_example.Data.Entities
 {
-    public int ProductId { get; set; }
-    public string ProductName { get; set; }
-    public string ProductDescription { get; set; }
+    public class Product : Entity
+    {        public string ProductName { get; set; } = string.Empty;
+        public string ProductDescription { get; set; } = string.Empty;
+    }
 }

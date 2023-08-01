@@ -1,6 +1,9 @@
-public class Person
+namespace signalr_example.Data.Entities 
 {
-    public int PersonId { get; set; }
-    public string Name { get; set; }
-    public string Surname { get; set; }
+    public class Person : Entity
+    {
+        public string Name { get; set; } = string.Empty;
+        public string Surname { get; set; } = string.Empty;
+        public string UserName { get; set; } = string.Empty;
+    }
 }

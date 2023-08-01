@@ -1,3 +1,4 @@
+using SignalRExample.Data;
 using SignalRExample.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,6 +10,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSignalR();
+builder.Services.AddTransient<ISignalRDbContext, SignalRDbContext>();
 
 var app = builder.Build();
 

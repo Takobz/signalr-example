@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.SignalR;
 
 namespace SignalRExample.Hubs;
 
-public class DatabaseHub : Hub<DatabaseHubEvents>
+public class DatabaseHub : Hub<IDatabaseHubEvents>
 {
     public async Task NotifyAll(TableChangeModel changeModel)
     {
@@ -12,7 +12,7 @@ public class DatabaseHub : Hub<DatabaseHubEvents>
     }
 }
 
-public interface DatabaseHubEvents
+public interface IDatabaseHubEvents
 {
     //Event we are going to fire when Product table changes.
     Task ProductTableChanged(TableChangeModel changeModel);
