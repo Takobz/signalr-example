@@ -10,7 +10,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSignalR();
+
 builder.Services.AddTransient<ISignalRDbContext, SignalRDbContext>();
+builder.Services.AddDbContext<SignalRDbContext>();
 
 var app = builder.Build();
 

@@ -15,6 +15,11 @@ namespace SignalRExample.Data
     {
         public SignalRDbContext(DbContextOptions<SignalRDbContext> options) : base(options) { }
 
+        protected override void OnConfiguring(DbContextOptionsBuilder builder)
+        {
+            builder.UseSqlite("Data Source=SignalRDatabase.db");               
+        }
+
         public DbSet<Person> Person { get; set; }
         public DbSet<Product> Product { get; set; }
 
