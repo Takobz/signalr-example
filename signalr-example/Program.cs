@@ -14,6 +14,15 @@ builder.Services.AddSignalR();
 builder.Services.AddTransient<ISignalRDbContext, SignalRDbContext>();
 builder.Services.AddDbContext<SignalRDbContext>();
 
+builder.Services.AddCors(options => {
+    options.AddPolicy("freeForAll", builder => 
+    {
+        builder.AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader();
+    });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -24,6 +33,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors("freeForAll");
 
 app.UseAuthorization();
 

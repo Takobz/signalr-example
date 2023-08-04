@@ -6,12 +6,14 @@ using SignalRExample.Hubs;
 
 namespace signalr_example.Controllers
 {
+    [ApiController]
+    [Route("[controller]")]
     public class SignalRController : ControllerBase
     {
         private readonly IHubContext<DatabaseHub, IDatabaseHubEvents> _dbHubContext;
         private readonly ISignalRDbContext _signalRDbContext;
 
-        SignalRController(
+        public SignalRController(
             IHubContext<DatabaseHub, IDatabaseHubEvents> dbHubContext,
             ISignalRDbContext signalRDbContext)
         {
@@ -21,7 +23,7 @@ namespace signalr_example.Controllers
             _signalRDbContext = signalRDbContext;
         }
 
-        [Route("/add-person")]
+        [Route("add-person")]
         [HttpPost]
         public async Task<IActionResult> AddPerson(string name, string surname)
         {
@@ -34,11 +36,11 @@ namespace signalr_example.Controllers
                 Surname = surname,
                 UserName = $"{Guid.NewGuid()}"
             };
-            
+
             DatabaseResult<Person> result = _signalRDbContext.AddPerson(person);
             if (result.Status == Status.Success)
             {
-                var changeModel = new TableChangeModel 
+                var changeModel = new TableChangeModel
                 {
                     TableName = "Person",
                     ItemId = result.Data.Id

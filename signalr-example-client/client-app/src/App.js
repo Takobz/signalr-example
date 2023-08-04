@@ -1,23 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import React, { useEffect, useState } from "react";
+import SignalRHubService from "./Services/SignalRHubService";
 
 function App() {
+  const [changes, setChanges] = useState([
+    { TableName: "Initial Load", ItemId: 1 },
+  ]);
+
+  const signalRHubService = new SignalRHubService()
+
+  useEffect(() => {
+    signalRHubService.startConnection("http://localhost:5078/database-hub");
+    signalRHubService.addTableChangeListner("PersonTableChanged", (tableChangeModel) => {
+      setChanges((prevChanges) => [...prevChanges, tableChangeModel]);
+    });
+  }, []);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Simple SignalR Client</h1>
+
+      <div>
+        <ul>
+          {changes.map((change, index) => {
+            return (
+              <li key={index}>
+                Table: {change.TableName} Identifier: {change.ItemId}
+              </li>
+            );
+          })}
+        </ul>
+      </div>
     </div>
   );
 }
