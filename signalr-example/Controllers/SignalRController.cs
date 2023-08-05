@@ -27,9 +27,6 @@ namespace signalr_example.Controllers
         [HttpPost]
         public async Task<IActionResult> AddPerson(string name, string surname)
         {
-            if (!string.IsNullOrEmpty(name) && !string.IsNullOrEmpty(surname))
-                return BadRequest("user must have name and surname");
-
             var person = new Person
             {
                 Name = name,
@@ -40,14 +37,16 @@ namespace signalr_example.Controllers
             DatabaseResult<Person> result = _signalRDbContext.AddPerson(person);
             if (result.Status == Status.Success)
             {
-                var changeModel = new TableChangeModel
+                var changeModel = new PersonChangeModel
                 {
-                    TableName = "Person",
-                    ItemId = result.Data.Id
+                    PersonId = person.Id,
+                    Name = person.Name,
+                    Surname = person.Surname,
+                    ChangeReason = "New Add"
                 };
 
                 //Calling all clients and giving them the change model.
-                await _dbHubContext.Clients.All.ProductTableChanged(changeModel);
+                await _dbHubContext.Clients.All.PersonTableChanged(changeModel);
                 return Ok("User Added and alerted subscribers!");
             }
 

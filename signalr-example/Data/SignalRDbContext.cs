@@ -26,6 +26,8 @@ namespace SignalRExample.Data
         public DatabaseResult<Person> AddPerson(Person person)
         {
             Person.Add(person);
+            SaveChanges();
+            
             return new DatabaseResult<Person> 
             {
                 Data = person,

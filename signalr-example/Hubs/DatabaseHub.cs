@@ -18,5 +18,5 @@ public interface IDatabaseHubEvents
     Task ProductTableChanged(TableChangeModel changeModel);
 
     //Event we are going to fire when Person table changes.
-    Task PersonTableChanged(TableChangeModel changeModel);
+    Task PersonTableChanged(PersonChangeModel changeModel);
 }
