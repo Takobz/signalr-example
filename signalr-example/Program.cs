@@ -17,9 +17,10 @@ builder.Services.AddDbContext<SignalRDbContext>();
 builder.Services.AddCors(options => {
     options.AddPolicy("freeForAll", builder => 
     {
-        builder.AllowAnyOrigin()
+        builder.WithOrigins("http://localhost:3000")
             .AllowAnyMethod()
-            .AllowAnyHeader();
+            .AllowAnyHeader()
+            .AllowCredentials();
     });
 });
 
@@ -31,8 +32,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
-app.UseHttpsRedirection();
 
 app.UseCors("freeForAll");
 
